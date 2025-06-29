@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
+
 
 namespace OfType
 {
@@ -11,20 +7,31 @@ namespace OfType
     {
         public IEnumerable<T> GetOfType<T>(IEnumerable enumerable)
         {
-            IEnumerable<T> values = enumerable.OfType<T>();
+            List<T> values = new List<T>();
+            foreach (var item in enumerable) {
+                if (item is T Titem) { 
+                    values.Add(Titem);
+                }
+            }
+
             return values;
         }
 
         public IEnumerable<TOutput> GetOfType<TSource, TOutput>(IEnumerable<TSource> enumerable)
         {
-            IEnumerable<TOutput> values = enumerable.OfType<TOutput>();
+            IEnumerable<TOutput> values = GetOfType<TOutput>(enumerable);
+
             return values;
         }
 
+
+
         public IEnumerable<TBase> OfBase<TBase, TDerived>(IEnumerable<TDerived> derivedItems) where TDerived : TBase
         {
-            IEnumerable<TBase> values = derivedItems.OfType<TBase>();
+            IEnumerable<TBase> values = GetOfType<TDerived, TBase>(derivedItems);
+
             return values;
         }
+
     }
 }
