@@ -19,30 +19,19 @@ namespace OfType
 
         public IEnumerable<TOutput> GetOfType<TSource, TOutput>(IEnumerable<TSource> enumerable)
         {
-            List<TOutput> values = new List<TOutput>();
-            foreach (var item in enumerable)
-            {
-                if (item is TOutput Titem)
-                {
-                    values.Add(Titem);
-                }
-            }
+            IEnumerable<TOutput> values = GetOfType<TOutput>(enumerable);
 
             return values;
         }
+
+
 
         public IEnumerable<TBase> OfBase<TBase, TDerived>(IEnumerable<TDerived> derivedItems) where TDerived : TBase
         {
-            List<TBase> values = new List<TBase>();
-            foreach (var item in derivedItems)
-            {
-                if (item is TBase Titem)
-                {
-                    values.Add(Titem);
-                }
-            }
+            IEnumerable<TBase> values = GetOfType<TDerived, TBase>(derivedItems);
 
             return values;
         }
+
     }
 }
